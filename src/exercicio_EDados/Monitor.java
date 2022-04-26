@@ -2,40 +2,36 @@ package exercicio_EDados;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
-
-import exercicio_EDados.Utilities;
+import java.util.Stack;
 
 
 public class Monitor {
 	
-	Carro [ ] fiftyCar = new Carro [3]; 
-	ArrayList <Cliente> clientes = new ArrayList <> ();
-	ArrayList <Cliente> filaEspera = new ArrayList <> ();
-	ArrayList <Log> alugados = new ArrayList <> ();
+	
 	
 	
 	Scanner lerOpcao = new Scanner (System.in);
 	Scanner lerDouble = new Scanner (System.in);
 	Utilities utilities = new Utilities ();
 	
-	public void monitor () {
+	public void monitor (String nome, Integer indice, Carro[] frota, ArrayList<Cliente> clientes, ArrayList<Cliente> filaEspera,
+			ArrayList<RegistroLog> alugados, Stack<RegistroLog> log) {
 		
 		String opcao = utilities.menu ();
-		int indice = 0; // indica próxima posição livre ou aponta para posição ilegal caso lista cheia
+		 // "indice" indica próxima posição livre ou aponta para posição ilegal caso lista cheia
 		do {
 			switch (opcao) {
 			case "1":			// Cadastrar carro
-				if (indice >= fiftyCar.length) {
-					fiftyCar = Arrays.copyOf (fiftyCar, fiftyCar.length*2); // aumenta o tamenho da string
+				if (indice >= frota.length) {
+					frota = Arrays.copyOf (frota, frota.length*2); // aumenta o tamenho da string
 				}
-				utilities.cadastrarCarro (fiftyCar, indice);
-				indice++;
+				utilities.cadastrarCarro (frota, indice);
+				indice = indice+1;
 				break;
 			case "2":				// Remover carro da lista
 				if (indice != 0) {
-					if (utilities.removerCarro (fiftyCar, indice) == true) {
+					if (utilities.removerCarro (frota, indice) == true) {
 						indice--;
 					}
 				} else {
@@ -44,7 +40,7 @@ public class Monitor {
 				break;
 			case "3":				// tornar caaro disponível/indisponível
 				if (indice != 0) {
-					utilities.mudarEstado (fiftyCar, indice);
+					utilities.mudarEstado (frota, indice);
 				} else {
 					System.out.println("Não há carros cadastrados!\n");
 				}
@@ -53,14 +49,14 @@ public class Monitor {
 				utilities.cadastrarCliente (clientes);
 				break;
 			case "5": 			 // aluguel de carro
-				utilities.alugarCarro (fiftyCar, indice, clientes, filaEspera, alugados);
+				utilities.alugarCarro (frota, indice, clientes, filaEspera, alugados);
 				break;
 			case"6":			// devolução de aluguel
-				utilities.devolverCarro (fiftyCar, indice, clientes, filaEspera, alugados);
+				utilities.devolverCarro (frota, indice, clientes, filaEspera, alugados);
 				break;
 			case "7":				// relatórios
 				Relatorios relatorios = new Relatorios ();
-				relatorios.relatorios (fiftyCar, indice, clientes, filaEspera, alugados);
+				relatorios.relatorios (frota, indice, clientes, filaEspera, alugados);
 				break;
 			case "0":				// sair
 				System.out.println("Obrigado por consultar nossas opções! Volte sempre à Pangeia Locadora!");

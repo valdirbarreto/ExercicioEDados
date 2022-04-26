@@ -31,12 +31,12 @@ public class Utilities {
 		return lerOpcao.nextLine();
 	}
 
-	public void cadastrarCarro (Carro [] fiftyCar, int indice) {
+	public void cadastrarCarro (Carro [] fiftyCar, Integer indice) {
 		
 		fiftyCar [indice] = menuCadastro ();
 	}
 	
-	public boolean removerCarro (Carro [] fiftyCar, int indice) {
+	public boolean removerCarro (Carro [] fiftyCar, Integer indice) {
 		String placa = menuRemocao ();
 		int ind = buscaPlaca (placa, fiftyCar, indice); // ind é indice do carro a ser removido
 		if (ind  < indice && ind >= 0) {
@@ -48,7 +48,7 @@ public class Utilities {
 		}
 	}
 	
-	public void listarCarrosDisponiveis (Carro [] fiftyCar, int indice) {
+	public void listarCarrosDisponiveis (Carro [] fiftyCar, Integer indice) {
 		System.out.println("FIFTY CARS \n");
 		System.out.println("Confira nossos modelos: \n");
 		int carDisp = 0;
@@ -61,7 +61,7 @@ public class Utilities {
 				System.out.printf ("Cor: %s%n", fiftyCar[i].getCor());
 				System.out.printf ("Placa: %s%n", fiftyCar[i].getPlaca());
 				System.out.printf ("Valor da diária: %.2f%n%n", fiftyCar[i].getValorDiaria());
-	//			System.out.printf ("Carro disponível: %s%n%n", (fiftyCar[i].isDisponivel()==true)?"Sim":"Não");
+	//			System.out.printf ("Carro disponível: %s%n%n", (frota[i].isDisponivel()==true)?"Sim":"Não");
 			}	
 		}	
 		if (carDisp == 0) System.out.println(" Não há carros disponíveis");
@@ -122,7 +122,7 @@ public class Utilities {
 	
 		
 	public void alugarCarro (Carro [] fiftyCar, int indice, ArrayList <Cliente> clientes, ArrayList <Cliente> fila,
-			ArrayList <Log> alugados) {
+			ArrayList <RegistroLog> alugados) {
 		
 		System.out.println("Digite o telefone com o DDD do cliente (somente números): ");
 		String fone = lerOpcao.nextLine();
@@ -148,7 +148,7 @@ public class Utilities {
 					break;
 				}
 			}
-			Log aluguel = new Log ();
+			RegistroLog aluguel = new RegistroLog ();
 			aluguel.setCarro (fiftyCar [numCar]);
 			aluguel.setCliente(clientes.get(i));
 			aluguel.setDataEntrada (new Date ());
@@ -164,7 +164,7 @@ public class Utilities {
 	}
 	
 	public void devolverCarro (Carro [] fiftyCar, int indice, ArrayList <Cliente> clientes, ArrayList <Cliente> fila,
-			ArrayList <Log> alugados) {
+			ArrayList <RegistroLog> alugados) {
 		
 		System.out.println("Digite a placa do carro sendo devolvido (somente letras e números): ");
 		String placa = lerOpcao.nextLine();
@@ -174,8 +174,8 @@ public class Utilities {
 			for (int j = 0; j < alugados.size(); j++) {
 				if (alugados.get(j).getCarro().getPlaca().equalsIgnoreCase(placa)) {
 					alugados.get(j).setDataSaida(new Date());
-					Log novoRegistro = new Log ();
-					novoRegistro.gravaLog (alugados.get(j));
+					RegistroLog novoRegistro = new RegistroLog ();
+//					novoRegistro.gravaLog (alugados.get(j));
 					System.out.printf("Carro Marca: %s Modelo: %s Placa: %s devolvido.%n%n",
 							fiftyCar [numCar].getMarca(), fiftyCar [numCar].getModelo(), fiftyCar [numCar].getPlaca());
 					checaFila (alugados.get(j).getCarro().getModelo(),fila);
@@ -250,7 +250,7 @@ public class Utilities {
 		
 	}
 	
-	private int buscaPlaca (String placa, Carro [] fiftyCar, int indice) { // busca burra da placa, retorna indice em fiftyCar ou -1
+	private int buscaPlaca (String placa, Carro [] fiftyCar, int indice) { // busca burra da placa, retorna indice em frota ou -1
 		
 		int i;
 		for (i = 0; i < indice; i++) {

@@ -9,8 +9,8 @@ public class Relatorios {
 	Scanner lerOpcao = new Scanner (System.in);	
 	Utilities utilities = new Utilities ();
 	
-	public void relatorios (Carro [] fiftyCar, int indice, ArrayList <Cliente> clientes, ArrayList <Cliente> fila,
-			ArrayList <Log> alugados) {
+	public void relatorios (Carro [] fiftyCar, Integer indice, ArrayList <Cliente> clientes, ArrayList <Cliente> fila,
+			ArrayList <RegistroLog> alugados) {
 		
 		String opcao = menuRelatorios ();
 		switch (opcao) {
@@ -31,15 +31,16 @@ public class Relatorios {
 		case "3":		// imprimir lista de espera
 			if (fila.size() != 0) {
 				Cliente clienteEmEspera = new Cliente ();
+				System.out.printf("Número de clientes na fila de espera: %d%n",fila.size());
 				for (int i = 0; i < fila.size(); i++) {
 					clienteEmEspera = fila.get(i);
 					System.out.println(clienteEmEspera.toString());
 				}
 			}
 			break;
-		case "4":
+		case "4":						
 			if (alugados.size() !=0) {
-				alugados.forEach((Log registro) -> {
+				alugados.forEach((RegistroLog registro) -> {
 					String data = new SimpleDateFormat ("dd/MM/yyyy 'às' HH:mm 'horas'").format (registro.getDataEntrada());
 					System.out.printf("Carro Marca: %s, Modelo: %s alugado para cliente: %s, Fone: %s no dia %s%n%n",
 							registro.getCarro().getMarca(), registro.getCarro().getModelo(), registro.getCliente().getNome(),
@@ -49,9 +50,17 @@ public class Relatorios {
 				System.out.println("Não há carros alugados!\n");
 			}
 			break;
-		case "5":
-			Log l = new Log ();
-			l.imprimeLog ();
+		case "5":			//relatório de movimentação
+			RegistroLog l = new RegistroLog ();
+//			l.imprimeLog ();
+			break;
+		case "6":			// valor total em diárias
+			
+			break;
+		case "7":			// totais de carros
+			System.out.printf("Total de carros: %d%n", indice );
+			System.out.printf("Total de carros alugados: %d%n", alugados.size());
+			System.out.printf("Total de carros disponíveis: %d%n", indice - alugados.size());
 			break;
 		case "0":
 			System.out.println("Obrigado por consultar nossas opções! Volte sempre à Pangeia Locadora!");
@@ -69,7 +78,9 @@ public class Relatorios {
 		prompt.append("2 - Imprimir lista por preço (mais baratos primeiro) \n");
 		prompt.append("3 - Imprimir lista de espera \n");
 		prompt.append("4 - Imprimir relatório de carros alugados\n");
-		prompt.append ("5 - Imprimir relatório de movimentação (alugados já devolvidos)\n");
+		prompt.append ("5 - Imprimir relatório de movimentação (alugados já devolvidos)\n"); 
+		prompt.append("6 - Imprimir valor total em diárias dos carros alugados \n");
+		prompt.append("7 - Imprimir o número de carros alugados e o total de carros \n");
 		prompt.append("0 - Sair \n");
 		
 		System.out.println(prompt.toString ());

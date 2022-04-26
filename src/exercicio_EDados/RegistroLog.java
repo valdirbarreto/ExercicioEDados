@@ -7,24 +7,24 @@ import java.util.Date;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
-public class Log {
+public class RegistroLog {
 	private Date dataEntrada;
 	private Date dataSaida;
 	private Cliente cliente;
 	private Carro carro;
 
-	private static Stack <Log> log = new Stack<Log>();
+	
 
-	public void gravaLog(Log log) {
-		Log.log.push(log);
+	public void gravaLog (Stack <RegistroLog> log, RegistroLog registroLog) {
+		log.push(registroLog);
 	}
 	
-	public void imprimeLog () {
-		Stack <Log> logaux = new Stack <> ();
+	public void imprimeLog (Stack <RegistroLog> log) {
+		Stack <RegistroLog> logaux = new Stack <> ();
 		logaux.addAll(log);
-//		logaux = log;
+//		logaux = registroLog;
 		while (!logaux.isEmpty()) {
-			Log registro = new Log();
+			RegistroLog registro = new RegistroLog();
 			registro = logaux.pop();
 			String dataSaida = new SimpleDateFormat ("dd/MM/yyyy 'às' HH:mm 'horas'").format (registro.getDataSaida());
 			System.out.printf("Em %s, carro %s, modelo %s, placa %s foi DEVOLVIDO por %s%n", dataSaida, registro.getCarro().getMarca(),
