@@ -3,6 +3,7 @@ package exercicio_EDados;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class UtilLocadora {
 
@@ -10,7 +11,7 @@ public class UtilLocadora {
 	
 	public Loja criaLoja (String nomeLoja) {
 		String nome  = new String (nomeLoja);
-		Integer indice = 0;
+		AtomicInteger indice = new AtomicInteger();
 		Carro [ ] frota = new Carro [5]; 
 		ArrayList <Cliente> clientes = new ArrayList <> ();
 		ArrayList <Cliente> filaEspera = new ArrayList <> ();
@@ -24,7 +25,7 @@ public class UtilLocadora {
 	public String menu () {
 		StringBuilder prompt = new StringBuilder();
 		
-		prompt.append("\nDigite a opção desejada: \n");
+		prompt.append("\nDigite a opï¿½ï¿½o desejada: \n");
 		prompt.append("1 - Ver lista de Lojas \n");
 		prompt.append("2 - Selecionar loja \n");
 		prompt.append("0 - Sair \n");
