@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Stack;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class Monitor {
@@ -15,54 +16,54 @@ public class Monitor {
 	Scanner lerDouble = new Scanner (System.in);
 	Utilities utilities = new Utilities ();
 	
-	public void monitor (String nome, Integer indice, Carro[] frota, ArrayList<Cliente> clientes, ArrayList<Cliente> filaEspera,
-			ArrayList<RegistroLog> alugados, Stack<RegistroLog> log) {
+	public void monitor (String nome, AtomicInteger indice, Carro[] frota, ArrayList<Cliente> clientes, ArrayList<Cliente> filaEspera,
+						 ArrayList<RegistroLog> alugados, Stack<RegistroLog> log) {
 		
 		String opcao = utilities.menu ();
-		 // "indice" indica próxima posição livre ou aponta para posição ilegal caso lista cheia
+		 // "indice" indica prï¿½xima posiï¿½ï¿½o livre ou aponta para posiï¿½ï¿½o ilegal caso lista cheia
 		do {
 			switch (opcao) {
 			case "1":			// Cadastrar carro
-				if (indice >= frota.length) {
+				if (indice.get() >= frota.length) {
 					frota = Arrays.copyOf (frota, frota.length*2); // aumenta o tamenho da string
 				}
-				utilities.cadastrarCarro (frota, indice);
-				indice = indice+1;
+				utilities.cadastrarCarro (frota, indice.get());
+				indice.incrementAndGet();
 				break;
 			case "2":				// Remover carro da lista
-				if (indice != 0) {
-					if (utilities.removerCarro (frota, indice) == true) {
-						indice--;
+				if (indice.get() != 0) {
+					if (utilities.removerCarro (frota, indice.get()) == true) {
+						indice.decrementAndGet();
 					}
 				} else {
-					System.out.println("Não há carros a remover!\n");
+					System.out.println("Nï¿½o hï¿½ carros a remover!\n");
 				}
 				break;
-			case "3":				// tornar caaro disponível/indisponível
-				if (indice != 0) {
-					utilities.mudarEstado (frota, indice);
+			case "3":				// tornar caaro disponï¿½vel/indisponï¿½vel
+				if (indice.get() != 0) {
+					utilities.mudarEstado (frota, indice.get());
 				} else {
-					System.out.println("Não há carros cadastrados!\n");
+					System.out.println("Nï¿½o hï¿½ carros cadastrados!\n");
 				}
 				break;
 			case "4":				// Cadastrar clientes
 				utilities.cadastrarCliente (clientes);
 				break;
 			case "5": 			 // aluguel de carro
-				utilities.alugarCarro (frota, indice, clientes, filaEspera, alugados);
+				utilities.alugarCarro (frota, indice.get(), clientes, filaEspera, alugados);
 				break;
-			case"6":			// devolução de aluguel
-				utilities.devolverCarro (frota, indice, clientes, filaEspera, alugados);
+			case"6":			// devoluï¿½ï¿½o de aluguel
+				utilities.devolverCarro (frota, indice.get(), clientes, filaEspera, alugados);
 				break;
-			case "7":				// relatórios
+			case "7":				// relatï¿½rios
 				Relatorios relatorios = new Relatorios ();
-				relatorios.relatorios (frota, indice, clientes, filaEspera, alugados);
+				relatorios.relatorios (frota, indice.get(), clientes, filaEspera, alugados);
 				break;
 			case "0":				// sair
-				System.out.println("Obrigado por consultar nossas opções! Volte sempre à Pangeia Locadora!");
+				System.out.println("Obrigado por consultar nossas opï¿½ï¿½es! Volte sempre ï¿½ Pangeia Locadora!");
 				return;
 			default:
-				System.out.println("Opção Inválida\n");
+				System.out.println("Opï¿½ï¿½o Invï¿½lida\n");
 			}
 			
 			opcao = utilities.menu ();

@@ -2,10 +2,11 @@ package exercicio_EDados;
 
 import java.util.ArrayList;
 import java.util.Stack;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Loja  {
 	private String nome;
-	private Integer indice;
+	private AtomicInteger indice;
 	private Carro [ ] frota; 
 	private ArrayList <Cliente> clientes;
 	private ArrayList <Cliente> filaEspera;
@@ -16,7 +17,7 @@ public class Loja  {
 		
 	}
 	
-	public Loja(String nome, Integer indice, Carro[] frota, ArrayList<Cliente> clientes, ArrayList<Cliente> filaEspera,
+	public Loja(String nome, AtomicInteger indice, Carro[] frota, ArrayList<Cliente> clientes, ArrayList<Cliente> filaEspera,
 			ArrayList<RegistroLog> alugados, Stack<RegistroLog> log) {
 		super();
 		this.nome = nome;
@@ -36,11 +37,11 @@ public class Loja  {
 		this.nome = nome;
 	}
 
-	public Integer getIndice() {
+	public AtomicInteger getIndice() {
 		return indice;
 	}
 
-	public void setIndice(Integer indice) {
+	public void setIndice(AtomicInteger indice) {
 		this.indice = indice;
 	}
 
