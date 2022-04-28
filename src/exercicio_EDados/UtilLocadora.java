@@ -25,7 +25,7 @@ public class UtilLocadora {
 	public String menu () {
 		StringBuilder prompt = new StringBuilder();
 		
-		prompt.append("\nDigite a opï¿½ï¿½o desejada: \n");
+		prompt.append("\nDigite a opção desejada: \n");
 		prompt.append("1 - Ver lista de Lojas \n");
 		prompt.append("2 - Selecionar loja \n");
 		prompt.append("0 - Sair \n");

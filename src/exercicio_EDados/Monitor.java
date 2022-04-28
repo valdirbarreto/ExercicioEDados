@@ -20,7 +20,7 @@ public class Monitor {
 						 ArrayList<RegistroLog> alugados, Stack<RegistroLog> log) {
 		
 		String opcao = utilities.menu ();
-		 // "indice" indica prï¿½xima posiï¿½ï¿½o livre ou aponta para posiï¿½ï¿½o ilegal caso lista cheia
+		 // "indice" indica próxima posição livre ou aponta para posição ilegal caso lista cheia
 		do {
 			switch (opcao) {
 			case "1":			// Cadastrar carro
@@ -36,14 +36,14 @@ public class Monitor {
 						indice.decrementAndGet();
 					}
 				} else {
-					System.out.println("Nï¿½o hï¿½ carros a remover!\n");
+					System.out.println("Não há carros a remover!\n");
 				}
 				break;
 			case "3":				// tornar caaro disponï¿½vel/indisponï¿½vel
 				if (indice.get() != 0) {
 					utilities.mudarEstado (frota, indice.get());
 				} else {
-					System.out.println("Nï¿½o hï¿½ carros cadastrados!\n");
+					System.out.println("Não há carros cadastrados!\n");
 				}
 				break;
 			case "4":				// Cadastrar clientes
@@ -52,18 +52,18 @@ public class Monitor {
 			case "5": 			 // aluguel de carro
 				utilities.alugarCarro (frota, indice.get(), clientes, filaEspera, alugados);
 				break;
-			case"6":			// devoluï¿½ï¿½o de aluguel
-				utilities.devolverCarro (frota, indice.get(), clientes, filaEspera, alugados);
+			case"6":			// devoluçãoo de aluguel
+				utilities.devolverCarro (frota, indice.get(), clientes, filaEspera, alugados, log);
 				break;
-			case "7":				// relatï¿½rios
+			case "7":				// relatórios
 				Relatorios relatorios = new Relatorios ();
-				relatorios.relatorios (frota, indice.get(), clientes, filaEspera, alugados);
+				relatorios.relatorios (nome, indice.get(), frota, clientes, filaEspera, alugados, log);
 				break;
 			case "0":				// sair
-				System.out.println("Obrigado por consultar nossas opï¿½ï¿½es! Volte sempre ï¿½ Pangeia Locadora!");
+				System.out.println("Obrigado por consultar nossas opções! Volte sempre à Pangeia Locadora!");
 				return;
 			default:
-				System.out.println("Opï¿½ï¿½o Invï¿½lida\n");
+				System.out.println("Opção Inválida\n");
 			}
 			
 			opcao = utilities.menu ();

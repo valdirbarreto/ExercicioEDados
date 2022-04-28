@@ -1,11 +1,8 @@
 package exercicio_EDados;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Stack;
-import java.util.stream.Collectors;
 
 public class RegistroLog {
 	private Date dataEntrada;
@@ -20,9 +17,12 @@ public class RegistroLog {
 	}
 	
 	public void imprimeLog (Stack <RegistroLog> log) {
+		if (log.isEmpty()) {
+			System.out.println ("Não há movimentação registrada");
+			return;
+		}
 		Stack <RegistroLog> logaux = new Stack <> ();
 		logaux.addAll(log);
-//		logaux = registroLog;
 		while (!logaux.isEmpty()) {
 			RegistroLog registro = new RegistroLog();
 			registro = logaux.pop();

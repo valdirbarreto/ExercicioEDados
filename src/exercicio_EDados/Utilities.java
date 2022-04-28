@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class Utilities {
 
@@ -16,14 +17,14 @@ public class Utilities {
 		
 		StringBuilder prompt = new StringBuilder();
 		
-		prompt.append("Digite a opï¿½ï¿½o desejada: \n");
+		prompt.append("\nDigite a opção desejada: \n");
 		prompt.append("1 - Cadastrar carro novo \n");
 		prompt.append("2 - Remover carro \n");
-		prompt.append("3 - Tornar carro disponï¿½vel ou indisponï¿½vel \n");
+		prompt.append("3 - Tornar carro disponível ou indisponível \n");
 		prompt.append ("4 - Cadastrar Cliente\n");
 		prompt.append("5 - Aluguel de carro\n");
-		prompt.append ("6 - Devoluï¿½ï¿½o de carro\n");
-		prompt.append ("7 - Relatï¿½rios\n");
+		prompt.append ("6 - Devolução de carro\n");
+		prompt.append ("7 - Relatórios\n");
 		prompt.append("0 - Sair \n");
 		
 		System.out.println(prompt.toString ());
@@ -39,55 +40,53 @@ public class Utilities {
 	
 	public boolean removerCarro (Carro [] fiftyCar, Integer indice) {
 		String placa = menuRemocao ();
-		int ind = buscaPlaca (placa, fiftyCar, indice); // ind ï¿½ indice do carro a ser removido
+		int ind = buscaPlaca (placa, fiftyCar, indice); // ind = índice do carro a ser removido
 		if (ind  < indice && ind >= 0) {
 			fiftyCar [ind] = fiftyCar [indice - 1];
 			return true;
 		} else {
-			System.out.println("Placa invï¿½lida");
+			System.out.println("Placa inválida");
 			return false;
 		}
 	}
 	
 	public void listarCarrosDisponiveis (Carro [] fiftyCar, Integer indice) {
 		System.out.println("FIFTY CARS \n");
-		System.out.println("Confira nossos modelos: \n");
+		System.out.println("Confira nossos modelos disponíveis: \n");
 		int carDisp = 0;
 		for (int i = 0; i < indice; i++) {
 			if (fiftyCar [i].isDisponivel()) {
 				carDisp++;
-				System.out.printf ("Carro disponï¿½vel nï¿½mero %d%n", i+1);
+				System.out.printf ("Carro disponível número %d%n", carDisp);
 				System.out.printf ("Marca: %s%n", fiftyCar[i].getMarca());
 				System.out.printf ("Modelo: %s%n", fiftyCar[i].getModelo());
 				System.out.printf ("Cor: %s%n", fiftyCar[i].getCor());
 				System.out.printf ("Placa: %s%n", fiftyCar[i].getPlaca());
-				System.out.printf ("Valor da diï¿½ria: %.2f%n%n", fiftyCar[i].getValorDiaria());
-	//			System.out.printf ("Carro disponï¿½vel: %s%n%n", (frota[i].isDisponivel()==true)?"Sim":"Nï¿½o");
+				System.out.printf ("Valor da diária: %.2f%n%n", fiftyCar[i].getValorDiaria());
+	//			System.out.printf ("Carro disponível: %s%n%n", (frota[i].isDisponivel()==true)?"Sim":"Não");
 			}	
 		}	
-		if (carDisp == 0) System.out.println(" Nï¿½o hï¿½ carros disponï¿½veis");
+		if (carDisp == 0) System.out.println(" Não há carros disponíveis");
 	}
 	
 	public void listarPorPreco (Carro [] fiftyCar, int indice) {
-		Carro [] temp = new Carro [fiftyCar.length];
-		System.arraycopy(fiftyCar, 0, temp, 0, fiftyCar.length);
-		if (indice > 2) {
+		Carro [] temp = new Carro [indice];
+		System.arraycopy(fiftyCar, 0, temp, 0, indice);
 			Arrays.sort(temp);
-		}
 		System.out.println("FIFTY CARS \n");
-		System.out.println("Confira nossos modelos (listados por preï¿½o): \n");
+		System.out.println("Confira nossos modelos disponíveis (listados por preço): \n");
 		int carDisp = 0;
 		for (int i = 0; i < indice; i++) {
 			if (temp [i].isDisponivel()) {
-				System.out.printf ("Carro nï¿½mero %d%n", ++carDisp);
+				System.out.printf ("Carro número %d%n", ++carDisp);
 				System.out.printf ("Marca: %s%n", temp[i].getMarca());
 				System.out.printf ("Modelo: %s%n", temp[i].getModelo());
 				System.out.printf ("Cor: %s%n", temp[i].getCor());
 				System.out.printf ("Placa: %s%n", temp[i].getPlaca());
-				System.out.printf ("Valor da diï¿½ria: %.2f%n%n", temp[i].getValorDiaria());
+				System.out.printf ("Valor da diária: %.2f%n%n", temp[i].getValorDiaria());
 			}			
 		}
-		if (carDisp == 0) System.out.println(" Nï¿½o hï¿½ carros disponï¿½veis");	
+		if (carDisp == 0) System.out.println(" Não há carros disponíveis");	
 	}
 	
 	public void mudarEstado (Carro [] fiftyCar, int indice) {
@@ -96,7 +95,7 @@ public class Utilities {
 		String placa = lerOpcao.nextLine();
 		int ind = buscaPlaca (placa, fiftyCar, indice);
 		if (ind < indice  && ind >=0) {
-			System.out.println("Digite I/i - Indisponï¿½vel ou D/d - Disponï¿½vel ");
+			System.out.println("Digite I/i - Indisponível ou D/d - Disponível ");
 			switch (lerOpcao.nextLine()){
 			case "I":
 			case "i":
@@ -107,10 +106,10 @@ public class Utilities {
 				fiftyCar [ind].setDisponivel(true);
 				break;
 			default:
-				System.out.println("Opï¿½ï¿½o invï¿½lida\n");
+				System.out.println("Opção inválida\n");
 			}
 		} else {
-			System.out.println("Placa invï¿½lida \n");
+			System.out.println("Placa inválida \n");
 		}
 	
 		
@@ -125,7 +124,7 @@ public class Utilities {
 	public void alugarCarro (Carro [] fiftyCar, int indice, ArrayList <Cliente> clientes, ArrayList <Cliente> fila,
 			ArrayList <RegistroLog> alugados) {
 		
-		System.out.println("Digite o telefone com o DDD do cliente (somente nï¿½meros): ");
+		System.out.println("Digite o telefone com o DDD do cliente (somente números): ");
 		String fone = lerOpcao.nextLine();
 		int i;
 		for (i = 0; i < clientes.size(); i++) {
@@ -134,7 +133,7 @@ public class Utilities {
 				break; // cliente cadastrado
 			}
 		}
-		if (i == clientes.size()) { // cliente nï¿½o cadastrado
+		if (i == clientes.size()) { // cliente não cadastrado
 			clientes.add(menuCliente ());
 		}
 		System.out.println("Digite o modelo do carro a ser alugado: ");
@@ -159,15 +158,16 @@ public class Utilities {
 					clientes.get(i).getNome(), clientes.get(i).getTelefone() );
 				
 		} else {
-			System.out.println("Nï¿½o hï¿½ carros deste modelo. Cliente ficarï¿½ em lista de espera\n");
+			System.out.println("Não há carros deste modelo. Cliente ficará em lista de espera\n");
+			clientes.get(i).getCarroDesejado().setModelo(modelo);
 			fila.add(clientes.get(i));
 		}
 	}
 	
 	public void devolverCarro (Carro [] fiftyCar, int indice, ArrayList <Cliente> clientes, ArrayList <Cliente> fila,
-			ArrayList <RegistroLog> alugados) {
+			ArrayList <RegistroLog> alugados, Stack<RegistroLog> log) {
 		
-		System.out.println("Digite a placa do carro sendo devolvido (somente letras e nï¿½meros): ");
+		System.out.println("Digite a placa do carro sendo devolvido (somente letras e números): ");
 		String placa = lerOpcao.nextLine();
 		int numCar = buscaPlaca (placa, fiftyCar, indice);
 		if (numCar != -1) {
@@ -176,7 +176,7 @@ public class Utilities {
 				if (alugados.get(j).getCarro().getPlaca().equalsIgnoreCase(placa)) {
 					alugados.get(j).setDataSaida(new Date());
 					RegistroLog novoRegistro = new RegistroLog ();
-//					novoRegistro.gravaLog (alugados.get(j));
+					novoRegistro.gravaLog (log, alugados.get(j));
 					System.out.printf("Carro Marca: %s Modelo: %s Placa: %s devolvido.%n%n",
 							fiftyCar [numCar].getMarca(), fiftyCar [numCar].getModelo(), fiftyCar [numCar].getPlaca());
 					checaFila (alugados.get(j).getCarro().getModelo(),fila);
@@ -185,7 +185,7 @@ public class Utilities {
 				}
 			}
 		} else {
-			System.out.println("Placa invï¿½lida! ");
+			System.out.println("Placa inválida! ");
 		}
 	}
 	
@@ -203,10 +203,10 @@ public class Utilities {
 		System.out.println("Digite a cor: ");
 		carroNovo.setCor (lerOpcao.nextLine());
 		
-		System.out.println("Digite a placa (somente letras e nï¿½meros): ");
+		System.out.println("Digite a placa (somente letras e números): ");
 		carroNovo.setPlaca (lerOpcao.nextLine());
 		
-		System.out.println("Digite o valor da diï¿½ria em Reais: ");
+		System.out.println("Digite o valor da diária em Reais: ");
 		carroNovo.setValorDiaria(lerDouble.nextDouble());
 		
 		carroNovo.setDisponivel(true);
@@ -229,10 +229,10 @@ public class Utilities {
 		System.out.println("Digite o nome: ");
 		cliente.setNome (lerOpcao.nextLine());
 		
-		System.out.println("Digite o telefone com o DDD (somente nï¿½meros): ");
+		System.out.println("Digite o telefone com o DDD (somente números): ");
 		cliente.setTelefone(lerOpcao.nextLine());
 		
-		System.out.println("Digite o logradouro (rua, avenida, etc e nï¿½mero): ");
+		System.out.println("Digite o logradouro (rua, avenida, etc e número): ");
 		endereco.setLogradouro(lerOpcao.nextLine());
 		
 		System.out.println("Digite o complemento: ");
@@ -276,8 +276,8 @@ public class Utilities {
 	private void checaFila (String modelo, ArrayList <Cliente> fila) {
 		fila.stream().forEach((Cliente cliente) -> {					// lambda!!!!!!
 			if (cliente.getCarroDesejado().getModelo().equalsIgnoreCase(modelo)) {
-				System.out.printf("ATENï¿½ï¿½O! cliente %s, fone: %s estï¿½ na fila de espera por carro deste modelo. "
-						+ "AVISï¿½-LO IMEDIATAMENTE%n%n",cliente.getNome(), cliente.getTelefone());
+				System.out.printf("ATENÇÃO! cliente %s, fone: %s está na fila de espera por carro deste modelo. "
+						+ "AVISÁ-LO IMEDIATAMENTE%n%n",cliente.getNome(), cliente.getTelefone());
 			}
 		});
 	}

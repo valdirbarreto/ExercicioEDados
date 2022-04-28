@@ -70,6 +70,11 @@ public class Carro implements Comparable <Carro>{
 	public int compareTo (Carro carro) {
 		return Double.valueOf(getValorDiaria()).compareTo (Double.valueOf(carro.getValorDiaria()));
 	}
+
+	@Override
+	public String toString() {
+		return "Carro [modelo=" + modelo + "]";
+	}
 	
 	
 	
